@@ -1,6 +1,6 @@
 # These substitutions allow the end user to override certain values
 substitutions:
-  name: "project-template"
+  name: "4-channel-wifi-module"
 
 esphome:
   name: "${name}"
@@ -11,13 +11,11 @@ esphome:
   # This will allow for (future) project identification,
   # configuration and updates.
   project:
-    name: esphome.project-template
+    name: intail.4-channel-wifi-module
     version: "1.0"
 
-esp32:
-  board: esp32dev
-  framework:
-    type: arduino
+esp8266:
+  board: esp12e
 
 # To be able to get logs from the device via serial and api.
 logger:
@@ -28,9 +26,14 @@ api:
 # OTA is required for Over-the-Air updating
 ota:
 
+# Activate the web server # version: 1 or 2
+web_server:
+  port: 80
+#  version: 1 # or 2
+
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://esphome/esphome-project-template/project-template-esp32.yaml@main
+  package_import_url: github://mrred2k/esphome_relais_4_channel\esphome_relais_4_channel\4channel-relay-esp8266.yaml@main
 
 wifi:
   # Set up a wifi access point using the device name above
@@ -41,6 +44,7 @@ wifi:
 # to provision wifi credentials to the device.
 captive_portal:
 
+
 ##########################################################
 # Most projects should not remove anything from above here
 # and should just modify the name, project name/version 
@@ -48,11 +52,47 @@ captive_portal:
 ##########################################################
 
 
-# Sets up Bluetooth LE (Only on ESP32) to allow the user
-# to provision wifi credentials to the device.
-esp32_improv:
-  authorizer: none
-
 # Sets up the improv via serial client for Wi-Fi provisioning.
 # Handy if your device has a usb port for the user to add credentials when they first get it.
 improv_serial:
+
+##_____________Hardware Configuration____________##
+
+switch:
+  - platform: gpio
+    name: ${name} Relay1
+    pin: GPIO5
+  - platform: gpio
+    name: ${name} Relay2
+    pin: GPIO4
+  - platform: gpio
+    pin: GPIO16
+    name: ${name} Onboard_Led
+    inverted: True
+
+sensor:
+#ADC Input
+  - platform: adc
+    pin: GPIO17
+    name: ${name} ADC_raw
+    update_interval: 60s
+# Uptime Sensor
+  - platform: uptime
+    name:  ${name} Uptime
+# Wifi Signal Sensor
+  - platform: wifi_signal
+    name: ${name} WiFi Signal
+    update_interval: 120s
+
+
+binary_sensor:
+#Presents the node status to Homeassistant
+  - platform: status
+    name: ${name} Status
+    
+
+status_led:
+#LED as a homeasstant connection indicator
+  pin:
+    number: GPIO2
+    inverted: True
