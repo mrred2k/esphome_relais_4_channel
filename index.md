@@ -1,6 +1,8 @@
 # About
 
-Add some information about your project here.
+4 Channel Relay board with a esp8266
+All Pins are broken out and are free to use.
+The two relais and leds are included in this esphome config as they are fixed.
 
 # Installation
 
