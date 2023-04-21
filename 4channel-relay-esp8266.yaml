@@ -6,7 +6,7 @@ esphome:
   name: "${name}"
   # Automatically add the mac address to the name
   # so you can use a single firmware for all devices
-  name_add_mac_suffix: true
+  # name_add_mac_suffix: true
 
   # This will allow for (future) project identification,
   # configuration and updates.
@@ -121,6 +121,6 @@ light:
 #Buttons for board production | Delete after first use 
 button:
   - platform: restart
-    name: ${devicename}_restart
+    name: ${name}_restart
   - platform: factory_reset
-    name: ${devicename} Reset to Factory
+    name: ${name} Reset to Factory
