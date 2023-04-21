@@ -60,15 +60,37 @@ improv_serial:
 
 switch:
   - platform: gpio
+    pin: GPIO16 # LED (D1) connected
     name: ${name} Relay1
-    pin: GPIO5
+    id: relay1
   - platform: gpio
+    pin: GPIO14 # LED (D5) connected
     name: ${name} Relay2
-    pin: GPIO4
+    id: relay2
   - platform: gpio
-    pin: GPIO16
-    name: ${name} Onboard_Led
-    inverted: True
+    pin: GPIO12 # LED (D9) connected
+    name: ${name} Relay3
+    id: relay3
+  - platform: gpio
+    pin: GPIO13 # LED (D11) connected
+    name: ${name} Relay4
+    id: relay4
+  - platform: gpio
+    pin: GPIO05 # LED (D9) connected; active LOW
+    name: ${name} Output_GPIO05
+    inverted: TRUE 
+  - platform: gpio
+    pin: GPIO04 # no LED connected; active LOW
+    name: ${name} Output_GPIO04
+    inverted: TRUE    
+#  - platform: gpio
+#    pin: GPIO00 # no LED connected; active LOW; use with caution (boot fails if pulled low)
+#    name: ${name} Output_GPIO00
+#    inverted: TRUE  
+  - platform: gpio
+    pin: GPIO15 # no LED connected; active LOW
+    name: ${name} Output_GPIO15
+    inverted: TRUE  
 
 sensor:
 #ADC Input
@@ -90,9 +112,15 @@ binary_sensor:
   - platform: status
     name: ${name} Status
     
+light:
+#LED as a homeasstant connection indicator and dual porpuse swith
+  - platform: status_led
+    name: ${name} Status Led
+    pin: GPIO2
 
-status_led:
-#LED as a homeasstant connection indicator
-  pin:
-    number: GPIO2
-    inverted: True
+#Buttons for board production | Delete after first use 
+button:
+  - platform: restart
+    name: ${devicename}_restart
+  - platform: factory_reset
+    name: ${devicename} Reset to Factory
