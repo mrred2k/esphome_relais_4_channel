@@ -34,6 +34,7 @@ web_server:
 # This should point to the public location of this yaml file.
 dashboard_import:
   package_import_url: github://mrred2k/esphome_relais_4_channel/4channel-relay-esp8266.yaml@main
+  import_full_config: true # or false
 
 wifi:
   # Set up a wifi access point using the device name above
